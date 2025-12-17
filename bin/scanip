@@ -1,0 +1,1 @@
+alias scan=nmap –A -Pn
