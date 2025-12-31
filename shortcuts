@@ -1,3 +1,12 @@
 compress() {
   tar cvfz $1.tar.gz $1
 }
+
+
+alias docker="sudo docker"
+alias pbcopy="xclip -selection clipboard"
+
+alias python="python3"
+alias pip="pip3"
+
+alias pg="sudo -u postgres psql"

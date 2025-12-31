@@ -1,7 +1,7 @@
 #!/bin/bash
 # initializer for my profile
 
-DOTENV_BASE_PATH=$HOME/dotenv
+DOTENV_BASE_PATH=$HOME/.dotenv
 
 echo "Loading profile"
 
@@ -11,3 +11,4 @@ source $DOTENV_BASE_PATH/git
 source $DOTENV_BASE_PATH/shortcuts
 source $DOTENV_BASE_PATH/ruby
 source $DOTENV_BASE_PATH/net
+source /home/deepak/.rvm/scripts/rvm
