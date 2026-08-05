@@ -1,1 +1,8 @@
-alias scanwifi='sudo iwlist wlan0 scanning'
+case "$(uname -s)" in
+  Darwin)
+    alias scanwifi='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s'
+    ;;
+  Linux)
+    alias scanwifi='sudo iw dev "$(iw dev | awk '\''$1 == "Interface" { print $2; exit }'\'')" scan'
+    ;;
+esac
