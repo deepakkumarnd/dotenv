@@ -1,0 +1,12 @@
+# Command-line tools
+brew "fd"
+brew "herdr"
+brew "jq"
+brew "just"
+brew "ripgrep"
+
+# Add graphical applications as casks, for example:
+# cask "visual-studio-code"
+
+# Add Mac App Store applications using `mas`, for example:
+# mas "Xcode", id: 497799835
