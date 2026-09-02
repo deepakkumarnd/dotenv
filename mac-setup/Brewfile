@@ -4,6 +4,11 @@ brew "herdr"
 brew "jq"
 brew "just"
 brew "ripgrep"
+brew "rbenv"
+brew "tree"
+brew "git"
+brew "wget"
+
 
 # Add graphical applications as casks, for example:
 # cask "visual-studio-code"

@@ -11,10 +11,10 @@ This repository records the tools and configuration needed to reproduce this Mac
    brew bundle --file ./Brewfile
    ```
 
-3. Review and apply macOS preferences:
+3. Review bundle
 
    ```sh
-   ./defaults.sh
+   brew bundle check --verbose --file Brewfile
    ```
 
 4. Copy or symlink the required files from `dotfiles/` into the home directory.
