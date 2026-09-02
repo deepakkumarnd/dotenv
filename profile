@@ -1,5 +1,7 @@
 #!/bin/bash
 # initializer for my profile
+RED='\033[0;31m'
+NC='\033[0m' # No Color (resets terminal back to default)
 
 DOTENV_BASE_PATH=$HOME/.env
 
@@ -23,6 +25,12 @@ parse_git_branch() {
   git symbolic-ref --short HEAD 2>/dev/null
 }
 
+# print error message
+print_error_message() {
+  local message="$1"
+  echo -e "${RED}Error: $message${NC}"
+}
+
 if [ -n "$ZSH_VERSION" ]; then
   setopt PROMPT_SUBST
   PS1='%F{blue}%n@%m%f:%F{green}%~%F{yellow}$(
@@ -37,4 +45,8 @@ else
 fi
 
 # Initialize rbenv
-eval "$(rbenv init -)"
+if command -v rbenv > /dev/null 2>&1; then
+  eval "$(rbenv init -)"
+else
+  print_error_message "Command not found rbenv"
+fi
