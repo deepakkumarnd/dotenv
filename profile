@@ -35,3 +35,6 @@ else
     [ -n "$branch" ] && echo " ($branch)"
   )\[\e[0m\]\$ '
 fi
+
+# Initialize rbenv
+eval "$(rbenv init -)"
