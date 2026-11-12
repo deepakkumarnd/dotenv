@@ -11,4 +11,6 @@ alias pip="pip3"
 
 alias pg="sudo -u postgres psql"
 
-alias code='codium .'
+if command -v codium >/dev/null 2>&1; then
+  alias code='codium .'
+fi
