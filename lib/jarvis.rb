@@ -1,5 +1,9 @@
 #!/usr/bin/env ruby
 
+# Resolve symlinks so this works when bin/jarvis is linked or run from anywhere
+JARVIS_ROOT = File.expand_path("..", File.dirname(File.realpath(__FILE__)))
+ENV['BUNDLE_GEMFILE'] ||= File.join(JARVIS_ROOT, "Gemfile")
+
 require 'bundler'
 require 'yaml'
 
@@ -51,7 +55,7 @@ module Bro
 
   class Bro < Thor
     def self.config
-      @config ||= YAML.load(File.read(File.expand_path("../../config.yml", __FILE__)))
+      @config ||= YAML.load(File.read(File.join(JARVIS_ROOT, "config.yml")))
     end
 
     no_commands do
@@ -152,4 +156,5 @@ module Bro
   end
 end
 
+$PROGRAM_NAME = "jarvis" # shown in Thor's help output
 Bro::Bro.start(ARGV)

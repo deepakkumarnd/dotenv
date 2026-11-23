@@ -1,1 +1,8 @@
-../lib/jarvis.rb
+#!/usr/bin/env bash
+# Run jarvis with the Ruby version pinned in .env/.ruby-version, from any directory.
+set -euo pipefail
+
+JARVIS_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+export RBENV_VERSION="$(tr -d '[:space:]' < "$JARVIS_ROOT/.ruby-version")"
+
+exec rbenv exec ruby "$JARVIS_ROOT/lib/jarvis.rb" "$@"
