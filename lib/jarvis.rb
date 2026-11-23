@@ -11,7 +11,7 @@ Bundler.require(:default)
 
 $pastel = Pastel.new
 
-module Bro
+module Jarvis
 
   module OutputHelpers
 
@@ -27,7 +27,7 @@ module Bro
   module CommandHelpers
 
     def run_secure_connect_command(type, server, user)
-      ip = Bro.config['servers'][server]
+      ip = Jarvis.config['servers'][server]
 
       if ip.nil?
         print_error "#{server}: server not found in the list"
@@ -37,7 +37,7 @@ module Bro
       command = "#{type} #{user}@#{ip}"
 
       begin
-        print_line "Running: #{command} use Password: #{Bro.config['dev_password']} for dev"
+        print_line "Running: #{command} use Password: #{Jarvis.config['dev_password']} for dev"
         system(command)
       rescue => ex
         print_error ex.message
@@ -53,7 +53,7 @@ module Bro
     end
   end
 
-  class Bro < Thor
+  class Jarvis < Thor
     def self.config
       @config ||= YAML.load(File.read(File.join(JARVIS_ROOT, "config.yml")))
     end
@@ -63,33 +63,33 @@ module Bro
       include CommandHelpers
     end
 
-    desc "hello", "Say hello to bro"
+    desc "hello", "Say hello to Jarvis"
     def hello
-      print_line "Hello, Bro. Good to see you today. Need some help ? Just call help.", :yellow
+      print_line "Hello! Jarvis at your service. Need some help? Just call help.", :yellow
       progress = ProgressBar.create
       50.times { progress.increment; sleep 0.1 }
     end
 
-    desc "list servers", "bro servers"
+    desc "servers", "List servers"
     def servers
       require 'terminal-table'
-      rows = Bro.config['servers'].to_a
+      rows = Jarvis.config['servers'].to_a
       table = Terminal::Table.new(:title => "Server List", :headings => ['Name', 'IP'], :rows => rows)
       table.align_column(1, :right)
       puts table
     end
 
-    desc "ssh to servers", "bro ssh <server_name>"
+    desc "ssh SERVER [USER]", "SSH to a server (default user: dev)"
     def ssh(server, user='dev')
       run_secure_connect_command("ssh", server, user)
     end
 
-    desc "sftp to servers", "bro sftp <server_name>"
+    desc "sftp SERVER [USER]", "SFTP to a server (default user: dev)"
     def sftp(server, user='dev')
       run_secure_connect_command("sftp", server, user)
     end
 
-    desc "start service", "bro start <service_name>"
+    desc "start SERVICE", "Start a service (server, mongodb, redis, vm)"
     def start(name)
       case name
       when 'server' then
@@ -116,13 +116,13 @@ module Bro
       end
     end
 
-    desc "scan port", "bro scan <hostname> range"
+    desc "scan HOSTNAME [RANGE]", "Scan a host or subnet with nmap"
     def scan(hostname, range=0)
       command = "nmap -n -sP #{hostname}/#{range}"
       system(command)
     end
 
-    desc "view commit histogram", "bro commits"
+    desc "commits", "View commit histogram by date"
     def commits
       command = 'git log --date=short | grep Date: | cut -d " " -f4 | uniq -c'
       result = IO.popen(command).read
@@ -137,7 +137,7 @@ module Bro
       end
     end
 
-    desc "view authors commits histogram", "bro authors commits"
+    desc "authors_commits", "View commit histogram by author"
     def authors_commits
       command = 'git log | grep Author: |  cut -d "<" -f2 | cut -d "@" -f1 | sort | uniq -c'
       result = IO.popen(command).read
@@ -157,4 +157,4 @@ module Bro
 end
 
 $PROGRAM_NAME = "jarvis" # shown in Thor's help output
-Bro::Bro.start(ARGV)
+Jarvis::Jarvis.start(ARGV)
