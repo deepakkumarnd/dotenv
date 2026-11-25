@@ -8,6 +8,7 @@ brew "rbenv"
 brew "tree"
 brew "git"
 brew "wget"
+brew "xclip"
 
 
 # Add graphical applications as casks, for example:
